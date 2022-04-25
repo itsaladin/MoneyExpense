@@ -25,7 +25,7 @@ const Expenses = observer<DrawerScreenProp<'Welcome'>>(({ navigation }) => {
   const cDate = new Date();
   let cMonth = cDate.getMonth() + 1;
 
-  const expenseFilterCategory = ['Week ↓', 'Month ↓', 'All ↓'];
+  const expenseFilterCategory = ['Week', 'Month', 'All'];
 
   const onFilterHandler = (selectedItem: string) => {
     if (selectedItem === 'Week') {
@@ -36,7 +36,7 @@ const Expenses = observer<DrawerScreenProp<'Welcome'>>(({ navigation }) => {
       setIsWeek(false);
       setIsAll(false);
       setIsMonth(true);
-    } else {
+    } else if (selectedItem === 'All') {
       setIsMonth(false);
       setIsWeek(false);
       setIsAll(true);
@@ -146,39 +146,37 @@ const Expenses = observer<DrawerScreenProp<'Welcome'>>(({ navigation }) => {
                     </PrimaryText>
                   </View>
                 </>
-              ) : (
+              ) : isAll ? (
                 //showing all expenses
-                isAll && (
-                  <>
-                    <View style={styles.itemRow}>
-                      <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
-                        Food Expenses
-                      </PrimaryText>
-                      <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
-                        {item?.foodExpense}
-                      </PrimaryText>
-                    </View>
+                <>
+                  <View style={styles.itemRow}>
+                    <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
+                      Food Expenses
+                    </PrimaryText>
+                    <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
+                      {item?.foodExpense}
+                    </PrimaryText>
+                  </View>
 
-                    <View style={styles.itemRow}>
-                      <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
-                        Home Rent Expenses
-                      </PrimaryText>
-                      <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
-                        {item?.homeRentExpense}
-                      </PrimaryText>
-                    </View>
+                  <View style={styles.itemRow}>
+                    <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
+                      Home Rent Expenses
+                    </PrimaryText>
+                    <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
+                      {item?.homeRentExpense}
+                    </PrimaryText>
+                  </View>
 
-                    <View style={styles.itemRow}>
-                      <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
-                        Date
-                      </PrimaryText>
-                      <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
-                        {item?.date}
-                      </PrimaryText>
-                    </View>
-                  </>
-                )
-              )}
+                  <View style={styles.itemRow}>
+                    <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
+                      Date
+                    </PrimaryText>
+                    <PrimaryText style={[styles.expense, { color: theme.colors.placeholder }]}>
+                      {item?.date}
+                    </PrimaryText>
+                  </View>
+                </>
+              ) : null}
             </View>
           );
         })}
@@ -192,7 +190,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   expenseContainer: {
-    flex: 1,
     borderBottomColor: COLORS.messageColor,
     borderBottomWidth: 1,
   },
@@ -214,7 +211,6 @@ const styles = StyleSheet.create({
   },
   filterContain: {
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
